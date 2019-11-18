@@ -21,6 +21,18 @@ class Hand
         (a.first..a.last).to_a == a
     end
 
+    def straight_flush?(cards)
+        self.same_suit?(cards) && self.in_order?(cards)
+    end
 
+    def royal_flush?(cards)
+        self.straight_flush?(cards) && cards.inject(0) { |sum, p| sum + p.value.sum } == 61
+    end
+
+    def straight?(cards)
+        self.in_order?(cards)
+    end
+
+    
 
 end
