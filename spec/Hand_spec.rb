@@ -71,7 +71,7 @@ describe "Hand" do
             qs = double(suit: "Spade", value: [13])
             js = double(suit: "Spade", value: [10])
             ts = double(suit: "Spade", value: [11])
-            expect(hand.straight_flush?([as,ks,qs,js,ts])).to eq(11)
+            expect(hand.straight_flush?([as,ks,qs,js,ts])).to eq(13)
         end
     end
 
@@ -128,6 +128,15 @@ describe "Hand" do
             ts = double(suit: "Spade", value: [6]) 
             expect(hand.pair?([as,ks,qs,js,ts])).to eq(14)
         end
+
+        it "should not be thrown off by other high-value cards" do
+            as = double(suit: "Spade", value: [14,1])
+            ks = double(suit: "Heart", value: [10])
+            qs = double(suit: "Diamond", value: [10])
+            js = double(suit: "Club", value: [12])
+            ts = double(suit: "Spade", value: [6]) 
+            expect(hand.pair?([as,ks,qs,js,ts])).to eq(10)
+        end
     end
 
     describe "#two_pair?" do
@@ -161,9 +170,18 @@ describe "Hand" do
             ts = double(suit: "Spade", value: [6])
             expect(hand.straight?([as,ks,qs,js,ts])).to eq(10)
         end
+
+            it "should not be thrown off by ace low" do 
+            as = double(suit: "Spade", value: [1, 14])
+            ks = double(suit: "Heart", value: [2])
+            qs = double(suit: "Diamond", value: [3])
+            js = double(suit: "Club", value: [4])
+            ts = double(suit: "Spade", value: [5])
+            expect(hand.straight?([as,ks,qs,js,ts])).to eq(5)
+        end
     end
 
-    describe "#flush" do
+    describe "#flush?" do
             it "should return true for a flush, with highest value" do
             as = double(suit: "Spade", value: [13])
             ks = double(suit: "Spade", value: [9])
