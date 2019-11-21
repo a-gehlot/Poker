@@ -1,9 +1,13 @@
 require "hand.rb"
 require "rspec"
 
+class DummyClass
+    include Hand 
+end
+
 describe "Hand" do
 
-    subject(:hand) { Hand.new }
+    subject(:hand) { DummyClass.new }
 
     describe "#same_suit?" do
         it "should return true if suits in a hand are the same" do
@@ -146,7 +150,9 @@ describe "Hand" do
             qs = double(suit: "Diamond", value: [10])
             js = double(suit: "Club", value: [10])
             ts = double(suit: "Spade", value: [6]) 
+            xs = double(suit: "Spade", value: [12])
             expect(hand.two_pair?([as,ks,qs,js,ts])).to eq(14)
+            expect(hand.two_pair?([qs, js, ts, xs, ks])).to be false
         end
     end
 

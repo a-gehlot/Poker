@@ -1,6 +1,7 @@
 require_relative "./Deck.rb"
 
-class Hand
+module Hand
+
     def same_suit?(cards)
         cards.all? { |card| card.suit == cards[0].suit }
     end

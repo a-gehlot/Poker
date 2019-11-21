@@ -19,6 +19,18 @@ class Player
         @deck.deal(array.count, @player_hand)
     end
 
+    def get_swap
+        swap_values = []
+        puts "select card spot, separated by a comma"
+        swap_values << gets.chomp.split(',')
+        if swap_values.include?("none")
+            return
+        else
+            swap_values.pop.map! { |i| i.to_i - 1 }
+            swap_cards(swap_values)
+        end
+    end
+
 
 
 end
