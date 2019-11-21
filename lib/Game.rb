@@ -23,6 +23,14 @@ class Game
         @players = []
         @deck = Deck.new
         @return_card_val = []
+        @pot = 0
+        @max_bet = 0
+    end
+
+    def round_bet
+        @players.each do |player|
+            player.bet(@pot)
+        end
     end
 
     def make_players
@@ -30,6 +38,26 @@ class Game
         num = gets.chomp.to_i
         num.times { @players << Player.new(@deck) }
     end
+
+    def player_options(player)
+        puts "enter amount to bet, or 'fold' to fold"
+        input = gets.chomp 
+        if input == "fold"
+            @players.delete(player)
+        else
+            player.bet(@pot, @max_bet)
+        end
+    end
+
+    def ensure_max
+        until @players.all? { |player| player.personal_bet == @max_bet }
+            @players.each do |player|
+                next if player.personal_bet == @max_bet
+                player_options(player)
+            end
+        end
+    end
+
 
     def get_rank
         @players.each do |player|
@@ -55,6 +83,9 @@ class Game
             next unless rank == top_rank
             top_val = val 
         end
+
+        winner_num = @return_card_val.index([top_rank, top_val])
+        @players[winner_num].personal_pot += @pot
 
         puts "the winner is player number #{@return_card_val.index([top_rank, top_val]) + 1}"
     end

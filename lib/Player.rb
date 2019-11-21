@@ -2,16 +2,31 @@ require_relative "./hand.rb"
 
 class Player
 
-    attr_accessor :deck, :player_hand
+    attr_accessor :deck, :player_hand, :personal_pot
 
     def initialize(deck)
         @deck = deck
         @deck.shuffle
         @player_hand = @deck.deal(5, Array.new)
+        @personal_pot = 20
+        @personal_bet = 0
     end
 
     def show_cards
         @player_hand.each { |card| puts card.name }
+    end
+
+    def bet(pot, max_bet)
+        puts "how much"
+        amount = gets.chomp.to_i
+        if amount > @personal_pot || amount < max_bet
+            raise ArgumentError
+        else
+            @personal_pot -= amount
+            pot += amount
+            @personal_bet += amount
+            max_bet = @personal_bet
+        end
     end
 
     def swap_cards(array)
