@@ -14,4 +14,13 @@ class Deck
         end
     end
     
+    def shuffle
+        @cards.shuffle!
+    end
+    
+    def deal(number, array)
+        number.times { array << @cards.shift } 
+        array
+    end
+
 end

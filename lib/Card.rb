@@ -1,5 +1,5 @@
 class Card
-    attr_accessor :value, :suit
+    attr_accessor :value, :suit, :name
 
     FACE_VALUES = { "J" => [11], "Q" => [12], "K" => [13], "A" => [1, 14] }
 
